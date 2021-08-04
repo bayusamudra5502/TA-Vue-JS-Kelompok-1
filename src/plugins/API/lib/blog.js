@@ -5,6 +5,18 @@ import { BlogError } from "../error/BlogError";
 const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/blog";
 
 export async function getRandomBlogs(count) {
+  /**
+   * Mendapatkan konten post random
+   *
+   * @param {Number} count - Jumlah post
+   * @returns {Array}
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengambilan data
+   *
+   * @example
+   * this.$blog.getRandomBlogs(2); // Array[Length: 2]
+   *
+   */
+
   try {
     const { data } = await axios.get(`${BASE_URL}/random/${count}`);
 
@@ -15,6 +27,18 @@ export async function getRandomBlogs(count) {
 }
 
 export async function getAllBlogs(page) {
+  /**
+   * Mendapatkan konten post dengan pagination
+   *
+   * @param {Number} page - Nomor halaman
+   * @returns {Array} - Panjang Array 4
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengambilan data
+   *
+   * @example
+   * this.$blog.getAllBlogs(2); // Array[Length: 4]
+   *
+   */
+
   try {
     const { data } = await axios({
       method: "GET",
@@ -30,6 +54,18 @@ export async function getAllBlogs(page) {
 }
 
 export async function getBlog(id) {
+  /**
+   * Mendapatkan konten post dengan pagination
+   *
+   * @param {Number} id - Nomor ID Post
+   * @returns {Object} - Objek Blog
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengambilan data
+   *
+   * @example
+   * this.$blog.getBlog(2); // Array[Length: 4]
+   *
+   */
+
   try {
     const { data } = await axios({
       method: "GET",
@@ -43,6 +79,20 @@ export async function getBlog(id) {
 }
 
 export async function addPost({ title, description }, token = null) {
+  /**
+   * Menambah post baru
+   *
+   * @param {Object} postObj - Objek Post
+   * @param {String} token - Token user saat ini (Opsional)
+   * @returns {Boolean} - True bila berhasil menambah post
+   * @throws {BlogError} - Bila terjadi kesalahan dalam penambahan post
+   *
+   * @example
+   * const objPost = { title: "Judul Post", description: "Ini Isi dari description"}
+   * this.$blog.addPost(objPost, <TOKEN>);
+   *
+   */
+
   const userToken = token ?? (await getCurrentToken());
 
   try {
@@ -67,6 +117,23 @@ export async function addPost({ title, description }, token = null) {
 }
 
 export async function editPost({ id, title, description }, token = null) {
+  /**
+   * Editing post
+   *
+   * @param {Object} editObject - Data post yang ingin diedit
+   * @param {String} token - Token user saat ini (Opsional)
+   * @returns {Boolean} - True, bila berhasil diedit
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengeditan post
+   *
+   * @example
+   * const editObj = { id: 121,
+   *             title: "Ini pesan edit",
+   *             description: "Ini Deskripsi baru" };
+   *
+   * this.$blog.getBlog(editObj);
+   *
+   */
+
   const userToken = token ?? (await getCurrentToken());
 
   try {
@@ -94,6 +161,19 @@ export async function editPost({ id, title, description }, token = null) {
 }
 
 export async function deleteBlog(id, token = null) {
+  /**
+   * Menghapus sebuah post
+   *
+   * @param {Number} id - id post yang akan dihapus
+   * @param {String} token - Token user saat ini (Opsional)
+   * @returns {Boolean} - True, bila berhasil dihapus
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengeditan post
+   *
+   * @example
+   * this.$blog.deleteBlog(123);
+   *
+   */
+
   const userToken = token ?? (await getCurrentToken());
 
   try {
@@ -116,6 +196,20 @@ export async function deleteBlog(id, token = null) {
 }
 
 export async function uploadPhoto({ id, photo }, token = null) {
+  /**
+   * Menambah/mengubah foto dari sebuah post
+   *
+   * @param {Object} editPhotoObject - Data post yang ingin ditambahkan fotonya
+   * @param {String} token - Token user saat ini (Opsional)
+   * @returns {Boolean} - True, bila berhasil diedit
+   * @throws {BlogError} - Bila terjadi kesalahan dalam pengeditan post
+   *
+   * @example
+   * const photoObj = { id: 123, photo: this.$refs.photo.files[0]}
+   * this.$blog.getBlog(photoObj);
+   *
+   */
+
   const userToken = token ?? (await getCurrentToken());
 
   try {

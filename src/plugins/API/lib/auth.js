@@ -5,6 +5,21 @@ const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/auth";
 const LOGIN_KEY = "login";
 
 export async function register({ email, password, name, photo_profile }) {
+  /**
+   * Mendaftarkan user baru
+   *
+   * @param {Object} Objek - berisi key email, password, name, dan photo_profile
+   * @returns {boolean}
+   * @throws {RegisterError} - BIla terjadi gagal Register
+   *
+   * @example
+   * const photo = this.$refs.photo.files[0];
+   * const userObj = {email: "person@example.com", password: "password",
+   *                  name: "Person", photo_profile: photo};
+   *
+   * this.$auth.login(userObj);
+   */
+
   const data = new FormData();
   data.append("email", email);
   data.append("password", password);
@@ -20,6 +35,18 @@ export async function register({ email, password, name, photo_profile }) {
 }
 
 export async function login({ email, password }) {
+  /**
+   * Mendaftarkan user baru
+   *
+   * @param {Object} Objek - berisi key email dan password user
+   * @returns {String} - Token user yang dilogin
+   * @throws {LoginError} - BIla terjadi gagal Register
+   *
+   * @example
+   * const userObj = {email: "person@example.com", password: "password"}
+   * this.$auth.login(userObj);
+   */
+
   const data = new FormData();
   data.append("email", email);
   data.append("password", password);
@@ -46,6 +73,15 @@ export async function login({ email, password }) {
 }
 
 export async function isLogged() {
+  /**
+   * Memeriksa keadaan session user saat ini
+   *
+   * @returns {Boolean} - True bila user masih memiliki Session
+   *
+   * @example
+   * this.$auth.isLogged();
+   */
+
   const loginSignature = localStorage.getItem(LOGIN_KEY);
 
   if (loginSignature) {
@@ -71,6 +107,16 @@ export async function isLogged() {
 }
 
 export async function logout() {
+  /**
+   * Melakukan proses logout
+   *
+   * @returns {Boolean} - True bila user berhasil keluar
+   * @throws {SessionError} - Bila terjadi error pada proses ini
+   *
+   * @example
+   * this.$auth.logout();
+   */
+
   const loginSignature = localStorage.getItem(LOGIN_KEY);
 
   if (loginSignature) {
@@ -101,6 +147,12 @@ export async function logout() {
 }
 
 export async function getCurrentToken() {
+  /**
+   * Mendapatkan token user
+   *
+   * @returns {String | null} - Token user, jika gagal mengeluarkan null
+   */
+
   if (isLogged()) {
     const loginSignature = localStorage.getItem(LOGIN_KEY);
     const { token } = JSON.parse(atob(loginSignature));
