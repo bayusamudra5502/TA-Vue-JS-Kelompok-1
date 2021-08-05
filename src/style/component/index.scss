@@ -1,0 +1,10 @@
+@import "header.scss";
+
+.container {
+  width: 100%;
+  margin: 0 20px;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

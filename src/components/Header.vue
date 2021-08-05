@@ -1,9 +1,12 @@
 <template>
   <el-header>
-    <el-row :gutter="15">
-      <el-col :span="15" class="title">Personal Blog</el-col>
-      <el-col :span="9">Dua</el-col>
-    </el-row>
+    <div class="container">
+      <div class="title">
+        <router-link to="/">
+          <img src="@/assets/header-logo.svg" />
+        </router-link>
+      </div>
+    </div>
   </el-header>
 </template>
 
