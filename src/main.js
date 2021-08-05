@@ -1,9 +1,9 @@
 import Vue from "vue";
+import "./plugins/API";
+import "./plugins/element.js";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./plugins/API";
-import "./plugins/element.js";
 
 Vue.config.productionTip = false;
 

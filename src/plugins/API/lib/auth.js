@@ -106,6 +106,33 @@ export async function isLogged() {
   }
 }
 
+export async function getUserDetails(token = null) {
+  /**
+   * Mendapatkan detail user
+   *
+   * @returns {token} - Token user yang akan dicari (opsional)
+   * @throws {Object} - Menghasilkan null bila terjadi kegagalan
+   *
+   * @example
+   * this.$auth.logout();
+   */
+
+  const userToken = token ?? getCurrentToken();
+  try {
+    const { data } = await axios({
+      url: `${BASE_URL}/me`,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 export async function logout() {
   /**
    * Melakukan proses logout

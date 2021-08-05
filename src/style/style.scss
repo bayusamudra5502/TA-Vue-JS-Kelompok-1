@@ -1,0 +1,23 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.el-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+
+  .el-row {
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}
