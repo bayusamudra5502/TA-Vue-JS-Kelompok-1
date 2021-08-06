@@ -196,7 +196,11 @@ export default {
           try {
             await this.$auth.register(data);
 
-            this.$message.success("Berhasil mendaftarkan user");
+            this.$notify({
+              title: "Berhasil",
+              message: "Selanjutnya, silahkan lakukan login",
+              type: "success",
+            });
             this.$router.push("/login");
           } catch (err) {
             if (err?.isEmailAvailable()) {
