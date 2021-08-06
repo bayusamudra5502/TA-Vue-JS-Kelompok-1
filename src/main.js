@@ -11,4 +11,24 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
+  async mounted() {
+    const data = this.$auth.lastSessionData();
+
+    if (data) {
+      this.$store.dispatch("auth/setUser", {
+        token: data.token,
+        data: {
+          photo_profile: data.photo_profile,
+        },
+      });
+
+      if (await this.$auth.isLogged()) {
+        const userObj = await this.$auth.getUserDetails();
+        this.$store.dispatch("auth/setUser", {
+          token: data.token,
+          data: userObj,
+        });
+      }
+    }
+  },
 }).$mount("#app");

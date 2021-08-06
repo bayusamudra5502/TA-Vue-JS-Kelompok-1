@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getCurrentToken } from "./auth";
 import { BlogError } from "../error/BlogError";
+import { BASE_URL as PHOTO_BASE_URL } from "../../../constant";
 
 const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/blog";
-const PHOTO_BASE_URL = "http://demo-api-vue.sanbercloud.com";
 
 export async function getRandomBlogs(count) {
   /**

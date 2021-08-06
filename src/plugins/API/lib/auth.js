@@ -60,6 +60,7 @@ export async function login({ email, password }) {
     const loginObj = {
       token,
       expires,
+      profile: responseData["photo_profile"],
     };
 
     const loginSignature = JSON.stringify(loginObj);
@@ -117,7 +118,7 @@ export async function getUserDetails(token = null) {
    * this.$auth.getUserDetails();
    */
 
-  const userToken = token ?? getCurrentToken();
+  const userToken = token ?? (await getCurrentToken());
   try {
     const { data } = await axios({
       url: `${BASE_URL}/me`,
@@ -180,11 +181,22 @@ export async function getCurrentToken() {
    * @returns {String | null} - Token user, jika gagal mengeluarkan null
    */
 
-  if (isLogged()) {
+  if (await isLogged()) {
     const loginSignature = localStorage.getItem(LOGIN_KEY);
     const { token } = JSON.parse(atob(loginSignature));
 
     return token;
+  } else {
+    return null;
+  }
+}
+
+export function lastSessionData() {
+  const loginSignature = localStorage.getItem(LOGIN_KEY);
+
+  if (loginSignature) {
+    const { token, profile: photo_profile } = JSON.parse(atob(loginSignature));
+    return { token, photo_profile };
   } else {
     return null;
   }
@@ -197,4 +209,5 @@ export default {
   logout,
   getCurrentToken,
   getUserDetails,
+  lastSessionData,
 };

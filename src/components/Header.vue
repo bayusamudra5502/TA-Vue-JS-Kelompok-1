@@ -11,7 +11,11 @@
         <navlink to="/blogs">Blogs</navlink>
         <navlink to="/about">Tentang Kami</navlink>
 
-        <el-dropdown @command="action">
+        <div class="btn-login" v-if="!isLogged">
+          <el-button type="primary" @click="goToLogin"> Login </el-button>
+        </div>
+
+        <el-dropdown @command="action" v-if="isLogged">
           <div class="avatar"></div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="add"> Tambah Post </el-dropdown-item>
@@ -27,25 +31,46 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import Navlink from "./Navlink.vue";
 
 export default {
   components: {
     navlink: Navlink,
   },
+  computed: {
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+      photoProfile: "auth/photoProfile",
+    }),
+  },
   methods: {
-    action(cmd) {
+    ...mapActions({
+      destroySession: "auth/resetUser",
+    }),
+    async action(cmd) {
       if (cmd === "add") {
         this.$router.push("/blogs/add");
       } else if (cmd === "profile") {
         this.$router.push("/profile");
       } else {
-        this.$message({
-          message: "Berhasil Logout",
-          type: "success",
-          showClose: true,
-        });
+        try {
+          await this.$auth.logout();
+
+          this.destroySession();
+          this.$message({
+            message: "Berhasil Logout",
+            type: "success",
+            showClose: true,
+          });
+        } catch (err) {
+          console.dir(err);
+          this.$message.error("Gagal melakukan logout");
+        }
       }
+    },
+    goToLogin() {
+      this.$router.push("/login");
     },
   },
 };
