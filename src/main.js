@@ -11,7 +11,12 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
-  async mounted() {
+  async created() {
+    const loading = this.$loading({
+      lock: true,
+      text: "Loading",
+    });
+
     const data = this.$auth.lastSessionData();
 
     if (data) {
@@ -30,5 +35,7 @@ new Vue({
         });
       }
     }
+
+    loading.close();
   },
 }).$mount("#app");

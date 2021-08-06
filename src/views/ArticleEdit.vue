@@ -1,17 +1,16 @@
 <template>
   <page-container>
-    <div class="home">
-      <p>Ini Halaman About yaa</p>
-    </div>
+    <article-editor :isEditMode="true"></article-editor>
   </page-container>
 </template>
 
 <script>
+import ArticleEditor from "../components/ArticleEditor/ArticleEditor.vue";
 import PageContainer from "../components/PageContainer.vue";
 
 export default {
-  name: "Home",
   components: {
+    "article-editor": ArticleEditor,
     "page-container": PageContainer,
   },
 };

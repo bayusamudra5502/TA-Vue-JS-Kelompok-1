@@ -8,7 +8,7 @@
       </div>
       <div class="nav">
         <navlink to="/" :isActive="true">Home</navlink>
-        <navlink to="/blogs">Blogs</navlink>
+        <navlink to="/posts">Blogs</navlink>
         <navlink to="/about">Tentang Kami</navlink>
 
         <div class="btn-login" v-if="!isLogged">
@@ -50,7 +50,7 @@ export default {
     }),
     async action(cmd) {
       if (cmd === "add") {
-        this.$router.push("/blogs/add");
+        this.$router.push("/posts/add");
       } else if (cmd === "profile") {
         this.$router.push("/profile");
       } else {
@@ -63,6 +63,8 @@ export default {
             type: "success",
             showClose: true,
           });
+
+          this.$router.push("/");
         } catch (err) {
           console.dir(err);
           this.$message.error("Gagal melakukan logout");

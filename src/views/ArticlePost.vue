@@ -1,8 +1,6 @@
 <template>
   <page-container>
-    <div class="home">
-      <p>Ini Halaman About yaa</p>
-    </div>
+    <!-- Isi disini yaa -->
   </page-container>
 </template>
 
@@ -16,3 +14,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>
