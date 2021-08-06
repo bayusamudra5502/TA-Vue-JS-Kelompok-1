@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { BASE_URL, USER_DEFAULT_ICON } from "../constant";
 
 export default {
@@ -16,7 +15,7 @@ export default {
         : USER_DEFAULT_ICON,
     isLogged: (state) => !!state.userToken,
   },
-  mutation: {
+  mutations: {
     setUserToken(state, newToken) {
       state.userToken = newToken;
     },
@@ -24,14 +23,10 @@ export default {
       state.user = newObject;
     },
   },
-  action: {
-    async setUser({ commit }, { token }) {
-      const newData = await Vue.$auth.getUserDetails(token);
-
-      if (newData) {
-        commit("setUserToken", token);
-        commit("setUserObject", newData);
-      }
+  actions: {
+    setUser({ commit }, { token, data }) {
+      commit("setUserToken", token);
+      commit("setUserObject", data);
     },
     resetUser({ commit }) {
       commit("setUserToken", null);

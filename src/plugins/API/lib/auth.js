@@ -196,4 +196,5 @@ export default {
   isLogged,
   logout,
   getCurrentToken,
+  getUserDetails,
 };

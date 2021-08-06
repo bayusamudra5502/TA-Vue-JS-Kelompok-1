@@ -9,8 +9,8 @@ export class AuthError extends Error {
     console.dir(this.errorObject);
   }
 
-  isUnathorized() {
-    return this.errorObject.status === 401;
+  isUnauthorized() {
+    return this.errorObject.response.status === 401;
   }
 }
 
