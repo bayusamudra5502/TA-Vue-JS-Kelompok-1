@@ -5,7 +5,16 @@
         <img src="@/assets/header-logo.svg" alt="logo" />
         <h1>Register</h1>
       </div>
-      <el-form :model="answer" :rules="rules">
+      <el-alert
+        title="Gagal Register"
+        type="error"
+        description="Anda telah mendaftar sebelumnya. Silahkan lakukan login."
+        show-icon
+        style="margin: 10px 0"
+        v-if="state.isUserAvailable"
+      >
+      </el-alert>
+      <el-form :model="answer" :rules="rules" ref="form">
         <el-form-item prop="name" label="Nama">
           <el-input
             placeholder="Masukkan Email"
@@ -43,15 +52,16 @@
             show-password
           />
         </el-form-item>
-        <el-form-item prop="file" label="Upload Photo Profile">
+        <el-form-item prop="profileForm" label="Upload Photo Profile">
           <el-upload
             class="upload-demo"
             drag
-            ref="picture"
             action=""
             accept="image/*"
+            ref="profile"
             :auto-upload="false"
             :limit="1"
+            :http-request="addFile"
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">
@@ -63,7 +73,9 @@
           </el-upload>
         </el-form-item>
         <el-form-item class="form-action">
-          <el-button type="primary">Daftar</el-button>
+          <el-button type="primary" @click="submit" :loading="state.isLoading"
+            >Daftar</el-button
+          >
         </el-form-item>
       </el-form>
       <div class="back">
@@ -81,61 +93,126 @@ import "../style/page/auth.scss";
 import AuthCard from "../components/memberArea/AuthCard.vue";
 
 export default {
-  data: () => ({
-    answer: {
-      email: "",
-      password: "",
-      passwordVerify: "",
-      name: "",
-    },
-    rules: {
-      name: [
-        { required: true, message: "Silahkan isi nama anda", trigger: "blur" },
-      ],
-      email: [
-        { required: true, message: "Silahkan isi email anda", trigger: "blur" },
-        {
-          type: "email",
-          message: "Email yang anda masukan tidak valid",
-          trigger: "blur",
-        },
-      ],
-      password: [
-        {
-          required: true,
-          message: "Silahkan isi password anda",
-          trigger: "blur",
-        },
-        {
-          min: 8,
-          message: "Panjang password minimal adalah 8 karakter",
-          trigger: "blur",
-        },
-      ],
-      passwordVerify: [
-        {
-          required: true,
-          message: "Silahkan isi verifikasi Password",
-        },
-        {
-          validator(_, value, callback) {
-            if (value !== this.answer.password) {
-              callback(new Error("Password tidak sama"));
-            } else {
-              callback();
-            }
+  data() {
+    return {
+      state: {
+        isLoading: false,
+        isUserAvailable: false,
+      },
+      answer: {
+        email: "",
+        password: "",
+        passwordVerify: "",
+        name: "",
+        file: null,
+      },
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "Silahkan isi nama anda",
+            trigger: "blur",
           },
-          trigger: "blur",
-        },
-      ],
-    },
-  }),
+        ],
+        email: [
+          {
+            required: true,
+            message: "Silahkan isi email anda",
+            trigger: "blur",
+          },
+          {
+            type: "email",
+            message: "Email yang anda masukan tidak valid",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: "Silahkan isi password anda",
+            trigger: "blur",
+          },
+          {
+            min: 8,
+            message: "Panjang password minimal adalah 8 karakter",
+            trigger: "blur",
+          },
+        ],
+        passwordVerify: [
+          {
+            required: true,
+            message: "Silahkan isi verifikasi Password",
+          },
+          {
+            validator: (_, value, callback) => {
+              if (value !== this.answer.password) {
+                callback(new Error("Password tidak sama"));
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur",
+          },
+        ],
+        profileForm: [
+          {
+            validator: (_, __, callback) => {
+              if (this.answer.file !== null) {
+                callback();
+              } else {
+                callback(new Error("Silahkan masukan foto profil"));
+              }
+            },
+            trigger: "blur",
+          },
+        ],
+      },
+    };
+  },
   components: {
     "auth-card": AuthCard,
   },
   methods: {
     goToRegister() {
       this.$router.push("/register");
+    },
+    addFile({ file }) {
+      this.answer.file = file;
+    },
+    submit() {
+      this.state.isUserAvailable = false;
+
+      this.$refs.profile.submit();
+      this.isLoading = true;
+      this.$refs.form.validate(async (success) => {
+        if (success) {
+          const data = {
+            name: this.answer.name,
+            email: this.answer.email,
+            password: this.answer.password,
+            photo_profile: this.answer.file,
+          };
+
+          try {
+            await this.$auth.register(data);
+
+            this.$message.success("Berhasil mendaftarkan user");
+            this.$router.push("/login");
+          } catch (err) {
+            if (err?.isEmailAvailable()) {
+              this.state.isUserAvailable = true;
+            } else {
+              console.dir(err);
+              this.$message.error("Terjadi kesalahan saat proses login.");
+            }
+          }
+
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+          return false;
+        }
+      });
     },
   },
 };

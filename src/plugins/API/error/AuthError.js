@@ -19,6 +19,10 @@ export class RegisterError extends AuthError {
     super(msg, errorObject);
     this.name = "RegisterError";
   }
+
+  isEmailAvailable() {
+    return this.errorObject.response.status === 500;
+  }
 }
 
 export class LoginError extends AuthError {

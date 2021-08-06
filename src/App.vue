@@ -4,13 +4,6 @@
 
 <script>
 export default {
-  methods: {
-    login() {
-      this.$auth.login({
-        username: "...",
-        password: "...",
-      });
-    },
-  },
+  name: "App",
 };
 </script>
