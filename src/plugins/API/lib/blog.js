@@ -83,7 +83,7 @@ export async function getBlog(id) {
    * @throws {BlogError} - Bila terjadi kesalahan dalam pengambilan data
    *
    * @example
-   * this.$blog.getBlog(2); // Array[Length: 4]
+   * this.$blog.getBlog(2);
    *
    */
 
@@ -158,7 +158,7 @@ export async function editPost({ id, title, description }, token = null) {
    *             title: "Ini pesan edit",
    *             description: "Ini Deskripsi baru" };
    *
-   * this.$blog.getBlog(editObj);
+   * this.$blog.editPost(editObj);
    *
    */
 
@@ -234,7 +234,7 @@ export async function uploadPhoto({ id, photo }, token = null) {
    *
    * @example
    * const photoObj = { id: 123, photo: this.$refs.photo.files[0]}
-   * this.$blog.getBlog(photoObj);
+   * this.$blog.uploadPhoto(photoObj);
    *
    */
 
