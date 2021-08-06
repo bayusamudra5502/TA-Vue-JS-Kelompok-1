@@ -1,15 +1,9 @@
 <template>
-  <el-container>
-    <app-header></app-header>
-  </el-container>
+  <router-view></router-view>
 </template>
 
 <script>
-import appHeader from "./components/Header.vue";
 export default {
-  components: {
-    "app-header": appHeader,
-  },
   methods: {
     login() {
       this.$auth.login({

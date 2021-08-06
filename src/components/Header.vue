@@ -3,18 +3,22 @@
     <div class="container">
       <div class="title">
         <router-link to="/">
-          <img src="@/assets/header-logo.svg" />
+          <img src="@/assets/header-logo.svg" alt="logo" />
         </router-link>
       </div>
       <div class="nav">
-        <router-link to="/">Home</router-link>
-        <router-link to="/blogs">Blogs</router-link>
-        <el-dropdown>
+        <navlink to="/" :isActive="true">Home</navlink>
+        <navlink to="/blogs">Blogs</navlink>
+        <navlink to="/about">Tentang Kami</navlink>
+
+        <el-dropdown @command="action">
           <div class="avatar"></div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Profile</el-dropdown-item>
-            <el-dropdown-item>Logout</el-dropdown-item>
-            <el-dropdown-item divided>About Us</el-dropdown-item>
+            <el-dropdown-item command="add"> Tambah Post </el-dropdown-item>
+            <el-dropdown-item command="profile" divided>
+              Profile
+            </el-dropdown-item>
+            <el-dropdown-item command="logout">Logout</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -23,9 +27,26 @@
 </template>
 
 <script>
+import Navlink from "./Navlink.vue";
+
 export default {
-  props: {
-    login: Boolean,
+  components: {
+    navlink: Navlink,
+  },
+  methods: {
+    action(cmd) {
+      if (cmd === "add") {
+        this.$router.push("/blogs/add");
+      } else if (cmd === "profile") {
+        this.$router.push("/profile");
+      } else {
+        this.$message({
+          message: "Berhasil Logout",
+          type: "success",
+          showClose: true,
+        });
+      }
+    },
   },
 };
 </script>
