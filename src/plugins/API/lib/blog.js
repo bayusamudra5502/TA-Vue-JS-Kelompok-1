@@ -3,6 +3,7 @@ import { getCurrentToken } from "./auth";
 import { BlogError } from "../error/BlogError";
 
 const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/blog";
+const PHOTO_BASE_URL = "http://demo-api-vue.sanbercloud.com";
 
 export async function getRandomBlogs(count) {
   /**
@@ -19,14 +20,20 @@ export async function getRandomBlogs(count) {
 
   try {
     const { data } = await axios.get(`${BASE_URL}/random/${count}`);
+    const formattedData = data.blogs.map((el) => ({
+      ...el,
+      photo: `${PHOTO_BASE_URL}${el.photo}`,
+      created_at: new Date(el.created_at),
+      updated_at: new Date(el.updated_at),
+    }));
 
-    return data.blogs;
+    return formattedData;
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }
 }
 
-export async function getAllBlogs(page) {
+export async function getAllBlogs(page = 1) {
   /**
    * Mendapatkan konten post dengan pagination
    *
@@ -47,7 +54,21 @@ export async function getAllBlogs(page) {
         page,
       },
     });
-    return data.blogs.data;
+
+    const formattedData = data.blogs.data.map((el) => ({
+      ...el,
+      photo: `${PHOTO_BASE_URL}${el.photo}`,
+      created_at: new Date(el.created_at),
+      updated_at: new Date(el.updated_at),
+    }));
+
+    const result = {
+      current_page: data.blogs.current_page,
+      data: formattedData,
+      total: data.blogs.total,
+    };
+
+    return result;
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }
@@ -72,7 +93,14 @@ export async function getBlog(id) {
       url: `${BASE_URL}/${id}`,
     });
 
-    return data.blog;
+    const formattedData = {
+      ...data.blog,
+      photo: `${PHOTO_BASE_URL}${data.blog.photo}`,
+      created_at: new Date(data.blog.created_at),
+      updated_at: new Date(data.blog.updated_at),
+    };
+
+    return formattedData;
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }

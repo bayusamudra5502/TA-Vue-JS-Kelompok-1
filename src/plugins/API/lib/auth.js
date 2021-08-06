@@ -114,7 +114,7 @@ export async function getUserDetails(token = null) {
    * @throws {Object} - Menghasilkan null bila terjadi kegagalan
    *
    * @example
-   * this.$auth.logout();
+   * this.$auth.getUserDetails();
    */
 
   const userToken = token ?? getCurrentToken();

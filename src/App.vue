@@ -10,5 +10,13 @@ export default {
   components: {
     "app-header": appHeader,
   },
+  methods: {
+    login() {
+      this.$auth.login({
+        username: "...",
+        password: "...",
+      });
+    },
+  },
 };
 </script>

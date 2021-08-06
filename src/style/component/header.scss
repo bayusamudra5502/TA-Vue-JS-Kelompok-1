@@ -4,14 +4,39 @@
   align-items: center;
   justify-content: center;
   margin: 0;
+  padding: 0;
+
+  .container {
+    height: 100%;
+  }
 
   .title {
     font-size: 1.2em;
     font-weight: bold;
-    height: 50px;
+    height: 100%;
 
     img {
       height: 100%;
     }
   }
+}
+
+.nav {
+  display: flex;
+}
+
+.nav a {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+  color: black;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(204, 204, 204);
+  margin: 0 15px;
+  cursor: pointer;
 }
