@@ -4,7 +4,10 @@ import { RegisterError, LoginError, SessionError } from "../error/AuthError";
 const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/auth";
 const LOGIN_KEY = "login";
 
-export async function register({ email, password, name, photo_profile }) {
+export async function register(
+  { email, password, name, photo_profile },
+  callback = () => {}
+) {
   /**
    * Mendaftarkan user baru
    *
@@ -27,7 +30,11 @@ export async function register({ email, password, name, photo_profile }) {
   data.append("photo_profile", photo_profile);
 
   try {
-    await axios.post(`${BASE_URL}/register`, data);
+    await axios.post(`${BASE_URL}/register`, data, {
+      onUploadProgress(e) {
+        callback((e.loaded * 100) / e.total);
+      },
+    });
     return true;
   } catch (err) {
     throw new RegisterError("Gagal Mendaftarkan User", err);

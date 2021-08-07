@@ -122,7 +122,7 @@ export async function getBlog(id) {
       url: `${BASE_URL}/${id}`,
     });
 
-    if (data) {
+    if (data.blog) {
       const formattedData = {
         ...data.blog,
         photo: data.blog.photo ? `${PHOTO_BASE_URL}${data.blog.photo}` : null,

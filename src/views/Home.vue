@@ -14,5 +14,8 @@ export default {
   components: {
     "page-container": PageContainer,
   },
+  mounted() {
+    document.title = "Halaman Utama - Bloggque";
+  },
 };
 </script>
