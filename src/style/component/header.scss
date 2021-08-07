@@ -56,6 +56,14 @@
   background-color: rgb(204, 204, 204);
   margin: 0 15px;
   cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 100%;
+  }
 }
 
 .nav .el-dropdown {

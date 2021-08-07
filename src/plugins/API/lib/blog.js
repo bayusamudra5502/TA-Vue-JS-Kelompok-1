@@ -20,14 +20,29 @@ export async function getRandomBlogs(count) {
 
   try {
     const { data } = await axios.get(`${BASE_URL}/random/${count}`);
-    const formattedData = data.blogs.map((el) => ({
-      ...el,
-      photo: `${PHOTO_BASE_URL}${el.photo}`,
-      created_at: new Date(el.created_at),
-      updated_at: new Date(el.updated_at),
-    }));
 
-    return formattedData;
+    if (data) {
+      const formattedData = data.blogs.map((el) => {
+        if (el.photo)
+          return {
+            ...el,
+            photo: `${PHOTO_BASE_URL}${el.photo}`,
+            created_at: new Date(el.created_at),
+            updated_at: new Date(el.updated_at),
+          };
+        else
+          return {
+            ...el,
+            photo: null,
+            created_at: new Date(el.created_at),
+            updated_at: new Date(el.updated_at),
+          };
+      });
+
+      return formattedData;
+    } else {
+      return null;
+    }
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }
@@ -55,20 +70,34 @@ export async function getAllBlogs(page = 1) {
       },
     });
 
-    const formattedData = data.blogs.data.map((el) => ({
-      ...el,
-      photo: `${PHOTO_BASE_URL}${el.photo}`,
-      created_at: new Date(el.created_at),
-      updated_at: new Date(el.updated_at),
-    }));
+    if (data) {
+      const formattedData = data.blogs.map((el) => {
+        if (el.photo)
+          return {
+            ...el,
+            photo: `${PHOTO_BASE_URL}${el.photo}`,
+            created_at: new Date(el.created_at),
+            updated_at: new Date(el.updated_at),
+          };
+        else
+          return {
+            ...el,
+            photo: null,
+            created_at: new Date(el.created_at),
+            updated_at: new Date(el.updated_at),
+          };
+      });
 
-    const result = {
-      current_page: data.blogs.current_page,
-      data: formattedData,
-      total: data.blogs.total,
-    };
+      const result = {
+        current_page: data.blogs.current_page,
+        data: formattedData,
+        total: data.blogs.total,
+      };
 
-    return result;
+      return result;
+    } else {
+      return null;
+    }
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }
@@ -93,14 +122,18 @@ export async function getBlog(id) {
       url: `${BASE_URL}/${id}`,
     });
 
-    const formattedData = {
-      ...data.blog,
-      photo: `${PHOTO_BASE_URL}${data.blog.photo}`,
-      created_at: new Date(data.blog.created_at),
-      updated_at: new Date(data.blog.updated_at),
-    };
+    if (data) {
+      const formattedData = {
+        ...data.blog,
+        photo: data.blog.photo ? `${PHOTO_BASE_URL}${data.blog.photo}` : null,
+        created_at: new Date(data.blog.created_at),
+        updated_at: new Date(data.blog.updated_at),
+      };
 
-    return formattedData;
+      return formattedData;
+    } else {
+      return null;
+    }
   } catch (err) {
     throw new BlogError("Tidak bisa mengambil data", err);
   }
@@ -112,7 +145,7 @@ export async function addPost({ title, description }, token = null) {
    *
    * @param {Object} postObj - Objek Post
    * @param {String} token - Token user saat ini (Opsional)
-   * @returns {Boolean} - True bila berhasil menambah post
+   * @returns {null | number} - menghasilkan id bila berhasil menambah post
    * @throws {BlogError} - Bila terjadi kesalahan dalam penambahan post
    *
    * @example
@@ -128,7 +161,7 @@ export async function addPost({ title, description }, token = null) {
     data.append("title", title);
     data.append("description", description);
 
-    const { status } = await axios({
+    const response = await axios({
       method: "POST",
       url: BASE_URL,
       headers: {
@@ -138,7 +171,11 @@ export async function addPost({ title, description }, token = null) {
       data,
     });
 
-    return 200 <= status < 300;
+    if (200 <= response.status && response.status < 300) {
+      return response.data.blog.id;
+    } else {
+      return null;
+    }
   } catch (err) {
     throw new BlogError("Tidak bisa mengedit blog", err);
   }
@@ -223,7 +260,11 @@ export async function deleteBlog(id, token = null) {
   }
 }
 
-export async function uploadPhoto({ id, photo }, token = null) {
+export async function uploadPhoto(
+  { id, photo },
+  callback = null,
+  token = null
+) {
   /**
    * Menambah/mengubah foto dari sebuah post
    *
@@ -239,6 +280,7 @@ export async function uploadPhoto({ id, photo }, token = null) {
    */
 
   const userToken = token ?? (await getCurrentToken());
+  const callbackFunction = callback ?? (() => {});
 
   try {
     const data = new FormData();
@@ -250,6 +292,9 @@ export async function uploadPhoto({ id, photo }, token = null) {
       data,
       headers: {
         Authorization: `Bearer ${userToken}`,
+      },
+      onUploadProgress: function(progressEvent) {
+        callbackFunction((progressEvent.loaded * 100) / progressEvent.total);
       },
     });
 
