@@ -1,6 +1,6 @@
 <template>
   <page-container>
-    <article-editor :isEditMode="true"></article-editor>
+    <article-editor :isEditMode="true" :id="$route.params.id"></article-editor>
   </page-container>
 </template>
 

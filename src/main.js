@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import "./plugins/API";
 import "./plugins/element.js";
+import "./plugins/TextboxAutosize.js";
 
 Vue.config.productionTip = false;
 
