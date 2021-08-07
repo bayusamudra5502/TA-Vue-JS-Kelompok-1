@@ -219,5 +219,8 @@ export default {
       });
     },
   },
+  mounted() {
+    document.title("Register Area - Bloggque");
+  },
 };
 </script>

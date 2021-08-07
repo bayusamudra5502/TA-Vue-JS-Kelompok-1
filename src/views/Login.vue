@@ -130,5 +130,8 @@ export default {
       });
     },
   },
+  mounted() {
+    document.title("Login Area - Bloggque");
+  },
 };
 </script>
