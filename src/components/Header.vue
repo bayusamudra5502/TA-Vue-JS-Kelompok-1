@@ -8,8 +8,15 @@
       </div>
       <div class="nav">
         <div class="editor" v-if="isEditor">
+          <el-button
+            type="text"
+            style="margin: 0 10px"
+            @click="showBlog"
+            v-if="isEditMode"
+            >Lihat Artikel</el-button
+          >
           <el-button type="primary" @click="onAction" :loading="loading">{{
-            isEditMode ? "Update" : "Simpan"
+            isEditMode ? "Update" : "Publish"
           }}</el-button>
         </div>
         <navlink to="/" :isActive="true" v-if="!isEditor">Home</navlink>
@@ -94,7 +101,10 @@ export default {
       this.$router.push("/login");
     },
     onAction() {
-      this.$emit("submit");
+      this.$emit("submit", false);
+    },
+    showBlog() {
+      this.$emit("submit", true);
     },
   },
 };

@@ -1,20 +1,24 @@
 <template>
-    <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
-        <div>
-            <h3>{{ blog.title }}</h3>
-            <p>{{ blog.description.substring(0, 15) }}</p>
-            <img class="image" :src="blog.photo ? apiDomain + blog.photo : 'https://picsum.photos/200/300'" height="200px" style="float: right"/>
-        </div>
-    </el-card>
+  <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
+    <div class="content">
+      <h2>
+        <router-link :to="'/posts/' + blog.id">{{ blog.title }}</router-link>
+      </h2>
+      <p>{{ blog.description.substring(0, 100) }}</p>
+    </div>
+    <div class="image">
+      <img :src="blog.photo" />
+    </div>
+  </el-card>
 </template>
 
 <script>
-//import { defineComponent } from '@vue/composition-api'
+import "../../style/component/blogItem.scss";
 
 export default {
-    data : () => ({
-         apiDomain : 'http://demo-api-vue.sanbercloud.com' ,
-    }),
-    props : ['blog']
-}
+  data: () => ({
+    apiDomain: "http://demo-api-vue.sanbercloud.com",
+  }),
+  props: ["blog"],
+};
 </script>

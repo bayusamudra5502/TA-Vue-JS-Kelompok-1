@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keydown.ctrl.83.prevent.stop="onSave">
     <app-header
       :isEditMode="isEditMode"
       :isEditor="true"
@@ -27,7 +27,7 @@
           <img :src="bigImg" />
           <div class="overlay"></div>
         </div>
-        <div @keydown.ctrl.83.prevent.stop="onSave">
+        <div>
           <div class="container article">
             <textarea-autosize
               class="title"
@@ -146,7 +146,7 @@ export default {
     isEditMode: Boolean,
   },
   methods: {
-    async onSave() {
+    async onSave(redirect) {
       this.isLoadingSubmit = true;
       const data = {
         title: this.title,
@@ -161,6 +161,9 @@ export default {
             ...data,
           });
           await this.refreshData();
+          if (redirect) {
+            this.$router.push(`/posts/${id}`);
+          }
         } else {
           const id = await this.$blog.addPost(data);
 
