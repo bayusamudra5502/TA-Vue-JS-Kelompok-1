@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{ blog.title }}<br/>
+    <button><img width="10" src="https://image.flaticon.com/icons/png/512/84/84380.png" alt=""></button>
+    <button @click="deleteBlog(blog.id)"><img width="10" src="https://www.iconsdb.com/icons/preview/black/delete-xxl.png" alt=""></button><br/>
+    <img width=200 :src="blog.image ? imagedomain + blog.image : 'https://media.suara.com/pictures/970x544/2021/06/26/97341-nct-dream-instagramatnct-dream.webp'" alt="">
+    {{ blog.content }}<br/>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+
+   var vm = new Vue({
+      el: '#app', 
+      data : {
+          errors : [],
+          blogs : [],
+          imagedomain : "http://localhost:8000"
+      },
+      methods : {
+          getBlogs : function (id){
+            const config = {
+              method : "post",
+              url : "posts/:id"
+            }
+            axios(config)
+              .then( (response) => {
+                  this.blogs = response.data.blogs
+              })
+              .catch( (error) => {
+                  console.log(error)
+              })
+          },
+          deleteBlog : function (id){
+            const config = {
+              method : "post",
+              url : "http://localhost:8000/api/blog",
+              params : { _method : "DELETE"}
+            }
+            axios(config)
+              .then( (response) => {
+                  this.$blog.deleteBlog(id)
+                  alert(response.data.message)
+              })
+              .catch( (error) => {
+                  console.log(error)
+              })
+          },
+          editBlog : function (){
+            const config = {
+              method : "post",
+              url : "posts/:id/edit"
+            }
+          },
+          created(){
+              this.getBlogs()
+          }
+
+
+      }
+   })
+
+  </script>
+</body>
+</html>
