@@ -3,7 +3,7 @@ import { getCurrentToken } from "./auth";
 import { BlogError } from "../error/BlogError";
 import { BASE_URL as PHOTO_BASE_URL } from "../../../constant";
 
-const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/blog";
+const BASE_URL = "https://demo-api-vue.sanbercloud.com/api/v2/blog";
 
 export async function getRandomBlogs(count) {
   /**

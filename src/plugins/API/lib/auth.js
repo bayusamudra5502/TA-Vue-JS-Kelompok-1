@@ -1,7 +1,7 @@
 import axios from "axios";
 import { RegisterError, LoginError, SessionError } from "../error/AuthError";
 
-const BASE_URL = "http://demo-api-vue.sanbercloud.com/api/v2/auth";
+const BASE_URL = "https://demo-api-vue.sanbercloud.com/api/v2/auth";
 const LOGIN_KEY = "login";
 
 export async function register(

@@ -31,7 +31,7 @@
             :current-page.sync="current_page"
             :page-size="4"
             layout="prev, pager, next"
-            :total="lengthPage"
+            :total="total"
             :hide-on-single-page="true"
           >
           </el-pagination>
@@ -77,6 +77,7 @@ export default {
     current_page: 1,
     lengthPage: 0,
     perPage: 0,
+    total: 0,
   }),
   name: "Home",
   components: {
@@ -86,12 +87,12 @@ export default {
   methods: {
     async getAll(page) {
       try {
-        this.blogsAll = (await this.$blog.getAllBlogs(page)).data;
-        //console.log((await this.$blog.getAllBlogs(page)))
-        // this.blogsAll = blogs;
-        this.page = (await this.$blog.getAllBlogs(page)).current_page;
-        this.lengthPage = (await this.$blog.getAllBlogs(page)).last_page;
-        this.perPage = (await this.$blog.getAllBlogs(page)).data.length;
+        const response = await this.$blog.getAllBlogs(page);
+        this.blogsAll = response.data;
+        this.page = response.current_page;
+        this.lengthPage = response.last_page;
+        this.perPage = response.data.length;
+        this.total = response.total;
       } catch (err) {
         console.dir(err);
       }
