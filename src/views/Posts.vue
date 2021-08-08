@@ -9,10 +9,16 @@
       </el-row>
       <el-row>
         <el-col :span="18" :offset="4">
-          <blog-item-component v-for="blog in blogsAll" :key="`blog-`+blog.id" :blog="blog"></blog-item-component>
+           <blog-item-component  v-for="blog in blogsAll" :key="`blog-`+blog.id" :blog="blog"></blog-item-component>
         </el-col>
       </el-row>
-
+      <el-pagination
+         v-model="page" 
+        :page-size="4"
+        :pager-count="perPage"
+        layout="prev, pager, next"
+        :total="lengthPage">
+      </el-pagination>
     </div>
   </page-container>
 </template>
@@ -48,6 +54,9 @@ import BlogItemComponentVue from '../components/Blog/BlogItemComponent.vue';
 export default {
   data: () => ({
     blogsAll : [],
+    page : 0,
+    lengthPage : 0,
+    perPage : 0
   }),
   name: "Home",
   components: {
@@ -56,8 +65,16 @@ export default {
   },
   methods:{
     async getAll(){
-      this.blogsAll = await  this.$blog.getAllBlogs();
-      console.log(this.blogsAll);
+      try {
+        this.blogsAll = (await this.$blog.getAllBlogs()).data;
+        console.log((await this.$blog.getAllBlogs()))
+        // this.blogsAll = blogs;
+        this.page = (await this.$blog.getAllBlogs()).current_page;
+        this.lengthPage = (await this.$blog.getAllBlogs()).total
+        this.perPage = (await this.$blog.getAllBlogs()).data.length;
+      } catch (err) {
+        console.dir(err);
+      }
     },
   },
    created(){
