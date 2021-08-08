@@ -1,5 +1,14 @@
 # Tugas Akhir Vue Js Kelompok 1
 
+## Nama Kelompok
+
+1. Bayu Samudra
+   @bayusamudra5502
+2. Farham Harvianto
+   @farhamapple
+3. Patricia Devita Samara
+   @patriciads17
+
 ## Project setup
 
 ```
