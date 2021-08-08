@@ -2,11 +2,11 @@
 
 ## Nama Kelompok
 
-1. Bayu Samudra
+1. Bayu Samudra : 
    @bayusamudra5502
-2. Farham Harvianto
+2. Farham Harvianto :
    @farhamapple
-3. Patricia Devita Samara
+3. Patricia Devita Samara :
    @patriciads17
  
 ## Demo Project
