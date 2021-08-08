@@ -12,9 +12,10 @@
 ## Demo Project
 
 ## Screenshoot Project
+See : [Link](https://drive.google.com/drive/folders/1Ee3_8vA16j9ZF9kKIUbl79ZZZWgMtAL-?usp=sharing).
 
 ## Video Demo Project
-See [Configuration Reference](https://drive.google.com/drive/folders/1Ee3_8vA16j9ZF9kKIUbl79ZZZWgMtAL-?usp=sharing).
+See : [Link](https://drive.google.com/drive/folders/1845eCtJBPSbh2XnDnAV40YL4U1DGskl_?usp=sharing).
 
 ## Project setup
 
