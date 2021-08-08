@@ -57,7 +57,11 @@
               />
             </div>
             <div class="article-post">
-              {{ data.description }}
+              <template v-for="(line, lineKey) in data.description.split('\n')">
+                <p :key="lineKey" v-if="line">
+                  {{ line }}
+                </p>
+              </template>
             </div>
           </div>
         </div>

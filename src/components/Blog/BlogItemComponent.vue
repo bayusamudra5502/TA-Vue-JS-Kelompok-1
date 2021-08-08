@@ -4,7 +4,13 @@
       <h2>
         <router-link :to="'/posts/' + blog.id">{{ blog.title }}</router-link>
       </h2>
-      <p>{{ blog.description.substring(0, 100) }}</p>
+      <p>
+        {{
+          blog.description.length > 100
+            ? `${blog.description.substring(0, 100)}...`
+            : blog.description
+        }}
+      </p>
       <div class="footer-artikel">
         <div class="date">
           <img src="@/assets/calendar.png" />
