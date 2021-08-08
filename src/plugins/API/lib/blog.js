@@ -71,7 +71,7 @@ export async function getAllBlogs(page = 1) {
     });
 
     if (data) {
-      const formattedData = data.blogs.map((el) => {
+      const formattedData = data.blogs.data.map((el) => {
         if (el.photo)
           return {
             ...el,
