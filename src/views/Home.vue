@@ -1,18 +1,24 @@
 <template>
   <page-container>
-    <div class="home container">
-      <div class="jumbotron">
-        <div>
-          <div class="halo">Halo</div>
-          <div style="font-size: 60px; margin-bottom: 20px">Selamat Datang</div>
-          <div style="font-size: 20px">
-            Temukan kisah-kisah menginspirasi di Bloggque
+    <div class="jumbotron-container">
+      <div class="home container">
+        <div class="jumbotron">
+          <div>
+            <div class="halo">Halo</div>
+            <div style="font-size: 60px; margin-bottom: 20px">
+              Selamat Datang
+            </div>
+            <div style="font-size: 20px">
+              Temukan kisah-kisah menginspirasi di Bloggque
+            </div>
+          </div>
+          <div class="img">
+            <img src="@/assets/jumbotron.png" style="height: 100%" />
           </div>
         </div>
-        <div class="img">
-          <img src="@/assets/jumbotron.png" style="height: 100%" />
-        </div>
       </div>
+    </div>
+    <div class="home container">
       <div style="width: 100%">
         <div class="small-title">Artikel Terbaru</div>
       </div>
@@ -53,6 +59,7 @@
 </style>
 
 <script>
+import "@/style/page/home.scss";
 import PageContainer from "../components/PageContainer.vue";
 import BlogItemComponentVue from "../components/Blog/BlogItemComponent.vue";
 import { mapGetters } from "vuex";

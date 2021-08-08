@@ -70,6 +70,7 @@
 import "@/style/page/article.scss";
 import PageContainer from "../components/PageContainer.vue";
 import defaultImg from "@/assets/article.jpg";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Home",
@@ -83,6 +84,9 @@ export default {
     isLoading: false,
   }),
   computed: {
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+    }),
     bigImg() {
       if (this.data.img) {
         return this.data.img;

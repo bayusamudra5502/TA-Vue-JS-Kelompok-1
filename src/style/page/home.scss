@@ -1,0 +1,32 @@
+.jumbotron-container {
+  background-color: #fff5e1;
+  padding: 20px 0 40px 0;
+}
+
+.home {
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0 10px;
+
+  .small-title {
+    font-size: 30px;
+    margin-bottom: 20px;
+    padding-top: 40px;
+    display: inline-block;
+    border-bottom: 3px solid black;
+    padding-bottom: 2px;
+  }
+}
+
+.jumbotron {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  width: 100%;
+
+  .img {
+    transform: translateX(30px);
+    height: 250px;
+  }
+}
