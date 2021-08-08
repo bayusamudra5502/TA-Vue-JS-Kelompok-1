@@ -1,85 +1,103 @@
 <template>
   <page-container>
-    <div class="home">
-      <el-row style="margin-bottom: 8px">
-        <el-col :span="12" :offset="4">
-          <div class="halo">Halaman</div>
-          <div style="font-size: 60px">Daftar Artikel</div>
-        </el-col>
-      </el-row>
-      <el-row>
+    <div class="jumbotron-container">
+      <div class="home container">
+        <div class="jumbotron">
+          <div>
+            <div class="halo">Halaman</div>
+            <div style="font-size: 60px; margin-bottom: 20px">
+              Daftar Artikel
+            </div>
+          </div>
+          <div class="img">
+            <img src="@/assets/jumbo-blogs.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home container" style="margin-top: 40px">
+      <el-col :span="24">
+        <blog-item-component
+          v-for="blog in blogsAll"
+          :key="`blog-` + blog.id"
+          :blog="blog"
+        ></blog-item-component>
+      </el-col>
+      <el-row style="margin: 20px 0">
         <el-col :span="18" :offset="4">
-           <blog-item-component  v-for="blog in blogsAll" :key="`blog-`+blog.id" :blog="blog"></blog-item-component>
+          <el-pagination
+            v-model="page"
+            @current-change="getAll"
+            :current-page.sync="current_page"
+            :page-size="4"
+            layout="prev, pager, next"
+            :total="lengthPage"
+            :hide-on-single-page="true"
+          >
+          </el-pagination>
         </el-col>
       </el-row>
-      <el-pagination
-         v-model="page" 
-        @current-change="getAll"
-        :current-page.sync="current_page"
-        :page-size="4"
-        layout="prev, pager, next"
-        :total="lengthPage">
-      </el-pagination>
     </div>
   </page-container>
 </template>
 <style>
-  #home-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  .halo {
-    font-size: 30px;
-    color: #E97356;
-    margin-bottom: 20px; 
-    padding-top: 100px;
-    display :inline-block;
-    border-bottom:5px solid #E97356;
-    padding-bottom:2px;
-  }
-  .artikel-terbaru {
-    font-size: 30px;
-    margin-bottom: 20px; 
-    padding-top: 100px;
-    display :inline-block;
-    border-bottom:5px solid black;
-    padding-bottom:2px;
-  }
+#home-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.halo {
+  font-size: 30px;
+  color: #e97356;
+  margin-bottom: 20px;
+  padding-top: 100px;
+  display: inline-block;
+  border-bottom: 5px solid #e97356;
+  padding-bottom: 2px;
+}
+.artikel-terbaru {
+  font-size: 30px;
+  margin-bottom: 20px;
+  padding-top: 100px;
+  display: inline-block;
+  border-bottom: 5px solid black;
+  padding-bottom: 2px;
+}
 </style>
 
 <script>
+import "@/style/page/home.scss";
 import PageContainer from "../components/PageContainer.vue";
-import BlogItemComponentVue from '../components/Blog/BlogItemComponent.vue';
+import BlogItemComponentVue from "../components/Blog/BlogItemComponent.vue";
 
 export default {
   data: () => ({
-    blogsAll : [],
-    page : 0,
+    blogsAll: [],
+    page: 0,
     current_page: 1,
-    lengthPage : 0,
-    perPage : 0
+    lengthPage: 0,
+    perPage: 0,
   }),
   name: "Home",
   components: {
     "page-container": PageContainer,
-    "blog-item-component" : BlogItemComponentVue
+    "blog-item-component": BlogItemComponentVue,
   },
-  methods:{
-    async getAll(page){
+  methods: {
+    async getAll(page) {
       try {
         this.blogsAll = (await this.$blog.getAllBlogs(page)).data;
         //console.log((await this.$blog.getAllBlogs(page)))
         // this.blogsAll = blogs;
         this.page = (await this.$blog.getAllBlogs(page)).current_page;
-        this.lengthPage = (await this.$blog.getAllBlogs(page)).last_page
+        this.lengthPage = (await this.$blog.getAllBlogs(page)).last_page;
         this.perPage = (await this.$blog.getAllBlogs(page)).data.length;
       } catch (err) {
         console.dir(err);
       }
     },
   },
-   created(){
+  created() {
     this.getAll();
   },
   mounted() {
