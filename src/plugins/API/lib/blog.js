@@ -92,6 +92,7 @@ export async function getAllBlogs(page = 1) {
         current_page: data.blogs.current_page,
         data: formattedData,
         total: data.blogs.total,
+        last_page: data.blogs.last_page,
       };
 
       return result;
