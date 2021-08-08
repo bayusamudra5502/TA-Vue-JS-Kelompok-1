@@ -93,6 +93,7 @@ export default {
         this.lengthPage = response.last_page;
         this.perPage = response.data.length;
         this.total = response.total;
+        this.current_page = response.current_page;
       } catch (err) {
         console.dir(err);
       }
