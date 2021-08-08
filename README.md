@@ -8,6 +8,13 @@
    @farhamapple
 3. Patricia Devita Samara
    @patriciads17
+ 
+## Demo Project
+
+## Screenshoot Project
+
+## Video Demo Project
+See [Configuration Reference](https://drive.google.com/drive/folders/1Ee3_8vA16j9ZF9kKIUbl79ZZZWgMtAL-?usp=sharing).
 
 ## Project setup
 
