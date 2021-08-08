@@ -22,6 +22,7 @@
           v-for="blogEmpat in blogsEmpat"
           :key="`blog-` + blogEmpat.id"
           :blog="blogEmpat"
+          @delete="getEmpat"
         ></blog-item-component>
       </el-col>
 
@@ -34,6 +35,7 @@
           v-for="blogRandom in blogsRandom"
           :key="`blog-` + blogRandom.id"
           :blog="blogRandom"
+          @delete="getRandom"
         ></blog-item-component>
       </el-col>
     </div>
@@ -58,6 +60,8 @@ export default {
   data: () => ({
     blogsEmpat: [],
     blogsRandom: [],
+    isBlogsLoading: false,
+    isRandomsLoading: false,
   }),
   name: "Home",
   components: {
@@ -71,7 +75,6 @@ export default {
       } catch (err) {
         console.dir(err);
       }
-      //console.dir(blogsEmpat);
     },
     async getRandom() {
       this.blogsRandom = await this.$blog.getRandomBlogs(4);

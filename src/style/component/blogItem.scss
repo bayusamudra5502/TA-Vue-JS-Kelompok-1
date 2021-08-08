@@ -23,6 +23,24 @@
     img {
       width: 100%;
     }
+
+    margin-left: 30px;
+  }
+
+  .footer-artikel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .date {
+    display: flex;
+    align-items: center;
+
+    img {
+      display: block;
+      margin-right: 5px;
+    }
   }
 }
 
