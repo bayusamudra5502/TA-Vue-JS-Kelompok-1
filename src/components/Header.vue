@@ -32,7 +32,13 @@
             <img :src="photoProfile" />
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="add" v-if="!isEditor">
+            <el-dropdown-item :disabled="true">
+              <b>Active User</b>
+            </el-dropdown-item>
+            <el-dropdown-item :disabled="true">
+              {{ name }}
+            </el-dropdown-item>
+            <el-dropdown-item command="add" v-if="!isEditor" :divided="true">
               Tambah Post
             </el-dropdown-item>
             <el-dropdown-item command="home" v-if="isEditor">
@@ -58,6 +64,7 @@ export default {
     ...mapGetters({
       isLogged: "auth/isLogged",
       photoProfile: "auth/photoProfile",
+      name: "auth/name",
     }),
   },
   props: {
