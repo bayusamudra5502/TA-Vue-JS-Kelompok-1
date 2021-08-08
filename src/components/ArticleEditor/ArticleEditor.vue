@@ -37,13 +37,8 @@
             <p style="font-style: italic; font-size: 0.8em" v-if="isEditMode">
               Terakhir diupdate pada {{ lastModified }}
             </p>
-            <div class="editor-photo">
-              <img
-                :src="img"
-                class="content-image"
-                alt="Article Image"
-                v-if="img !== null && isEditMode"
-              />
+            <div class="editor-photo" v-if="img !== null && isEditMode">
+              <img :src="img" class="content-image" alt="Article Image" />
               <div class="overlay">
                 <el-button type="text" @click="isDialogOpen = true">
                   Ubah Gambar
@@ -195,9 +190,14 @@ export default {
           this.img = posts.photo;
           this.lastModifiedObj = posts.updated_at;
         } else {
+          this.$notify.warning({
+            title: "Peringatan",
+            message: "Artikel yang anda cari tidak ditemukan",
+          });
           this.$router.push("/posts/add");
         }
       } catch (err) {
+        console.dir(err);
         this.$message.error("Terjadi kesalahan saat pengambilan data.");
         this.$router.push("/");
       }
@@ -229,17 +229,17 @@ export default {
     },
   },
   async beforeMount() {
-    this.$notify.info({
-      title: "Tips",
-      message: "Anda dapat gunakan CTRL+S untuk menyimpan perubahan",
-    });
-
     if (this.isEditMode) {
       document.title = "Edit Postingan - Bloggque";
       await this.refreshData();
     } else {
       document.title = "Tambah Postingan - Bloggque";
     }
+
+    this.$notify.info({
+      title: "Tips",
+      message: "Anda dapat gunakan CTRL+S untuk menyimpan perubahan",
+    });
   },
 };
 </script>

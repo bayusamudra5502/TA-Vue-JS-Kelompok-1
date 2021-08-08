@@ -84,6 +84,9 @@ export default {
    created(){
     this.getEmpat();
     this.getRandom();
-  }
+  },
+  mounted() {
+    document.title = "Halaman Utama - Bloggque";
+  },
 };
 </script>

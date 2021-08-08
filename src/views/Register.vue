@@ -71,6 +71,10 @@
               File harus bertipe gambar
             </div>
           </el-upload>
+          <el-progress
+            :percentage="state.uploadProgress"
+            v-if="state.isUploading"
+          ></el-progress>
         </el-form-item>
         <el-form-item class="form-action">
           <el-button type="primary" @click="submit" :loading="state.isLoading"
@@ -98,6 +102,8 @@ export default {
       state: {
         isLoading: false,
         isUserAvailable: false,
+        isUploading: false,
+        uploadProgress: 0,
       },
       answer: {
         email: "",
@@ -180,10 +186,13 @@ export default {
       this.answer.file = file;
     },
     submit() {
-      this.state.isUserAvailable = false;
+      const callback = this.stateUpdater.bind(this);
+      this.state.isLoading = true;
+      this.state.isUploading = true;
+      this.state.uploadProgress = 0;
 
+      this.state.isUserAvailable = false;
       this.$refs.profile.submit();
-      this.isLoading = true;
       this.$refs.form.validate(async (success) => {
         if (success) {
           const data = {
@@ -194,7 +203,7 @@ export default {
           };
 
           try {
-            await this.$auth.register(data);
+            await this.$auth.register(data, callback);
 
             this.$notify({
               title: "Berhasil",
@@ -218,9 +227,12 @@ export default {
         }
       });
     },
+    stateUpdater(val) {
+      this.state.uploadProgress = parseInt(val.toFixed(0));
+    },
   },
   mounted() {
-    document.title("Register Area - Bloggque");
+    document.title = "Register Area - Bloggque";
   },
 };
 </script>

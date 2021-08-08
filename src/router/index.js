@@ -54,14 +54,6 @@ const routes = [
     },
   },
   {
-    path: "/posts/:id/upload",
-    name: "UploadPicture",
-    component: () => import("../views/UploadPhoto.vue"),
-    meta: {
-      isAuthRequired: true,
-    },
-  },
-  {
     path: "/posts/:id",
     name: "Article",
     component: () => import("../views/ArticlePost.vue"),

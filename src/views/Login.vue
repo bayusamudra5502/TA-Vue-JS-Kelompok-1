@@ -131,7 +131,7 @@ export default {
     },
   },
   mounted() {
-    document.title("Login Area - Bloggque");
+    document.title = "Login Area - Bloggque";
   },
 };
 </script>
