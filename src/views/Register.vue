@@ -226,6 +226,10 @@ export default {
           return false;
         }
       });
+
+      this.state.isLoading = false;
+      this.state.isUploading = false;
+      this.state.uploadProgress = 0;
     },
     stateUpdater(val) {
       this.state.uploadProgress = parseInt(val.toFixed(0));

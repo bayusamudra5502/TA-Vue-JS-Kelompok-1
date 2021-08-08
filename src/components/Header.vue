@@ -38,9 +38,6 @@
             <el-dropdown-item command="home" v-if="isEditor">
               Home
             </el-dropdown-item>
-            <el-dropdown-item command="profile" divided>
-              Profile
-            </el-dropdown-item>
             <el-dropdown-item command="logout">Logout</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
