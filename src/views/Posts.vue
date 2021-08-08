@@ -70,7 +70,7 @@ export default {
         console.log((await this.$blog.getAllBlogs()))
         // this.blogsAll = blogs;
         this.page = (await this.$blog.getAllBlogs()).current_page;
-        this.lengthPage = (await this.$blog.getAllBlogs()).total
+        this.lengthPage = (await this.$blog.getAllBlogs()).last_page
         this.perPage = (await this.$blog.getAllBlogs()).data.length;
       } catch (err) {
         console.dir(err);

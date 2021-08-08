@@ -65,7 +65,6 @@ export default {
     async deleteBlog() {
       try {
         await this.$blog.deleteBlog(this.blog.id);
-
         this.$message.success("Artikel berhasil dihapus");
         this.$emit("delete");
       } catch {
