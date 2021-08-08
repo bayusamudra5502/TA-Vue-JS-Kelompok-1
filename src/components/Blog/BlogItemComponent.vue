@@ -30,21 +30,36 @@
       </div>
     </div>
     <div class="image">
-      <img :src="blog.photo" />
+      <router-link :to="`/posts/${blog.id}`">
+        <img :src="photo" :alt="`Foto ${blog.title}`" />
+      </router-link>
     </div>
   </el-card>
 </template>
 
 <script>
 import "../../style/component/blogItem.scss";
+import defaultImg from "@/assets/sq-default.jpg";
+import { mapGetters } from "vuex";
 
 export default {
-  data: () => ({
-    isLogged: true,
-  }),
+  computed: {
+    photo() {
+      if (this.blog.photo) {
+        return this.blog.photo;
+      } else {
+        return defaultImg;
+      }
+    },
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+    }),
+  },
   methods: {
     async deleteBlog() {
       try {
+        await this.$blog.deleteBlog(this.blog.id);
+
         this.$message.success("Artikel berhasil dihapus");
         this.$emit("delete");
       } catch {

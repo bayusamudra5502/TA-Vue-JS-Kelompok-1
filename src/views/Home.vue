@@ -55,6 +55,7 @@
 <script>
 import PageContainer from "../components/PageContainer.vue";
 import BlogItemComponentVue from "../components/Blog/BlogItemComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
@@ -67,6 +68,11 @@ export default {
   components: {
     "page-container": PageContainer,
     "blog-item-component": BlogItemComponentVue,
+  },
+  computed: {
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+    }),
   },
   methods: {
     async getEmpat() {
