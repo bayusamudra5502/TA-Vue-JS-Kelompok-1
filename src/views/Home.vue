@@ -1,18 +1,24 @@
 <template>
   <page-container>
-    <div class="home container">
-      <div class="jumbotron">
-        <div>
-          <div class="halo">Halo</div>
-          <div style="font-size: 60px; margin-bottom: 20px">Selamat Datang</div>
-          <div style="font-size: 20px">
-            Temukan kisah-kisah menginspirasi di Bloggque
+    <div class="jumbotron-container">
+      <div class="home container">
+        <div class="jumbotron">
+          <div>
+            <div class="halo">Halo</div>
+            <div style="font-size: 60px; margin-bottom: 20px">
+              Selamat Datang
+            </div>
+            <div style="font-size: 20px">
+              Temukan kisah-kisah menginspirasi di Bloggque
+            </div>
+          </div>
+          <div class="img">
+            <img src="@/assets/jumbotron.png" style="height: 100%" />
           </div>
         </div>
-        <div class="img">
-          <img src="@/assets/jumbotron.png" style="height: 100%" />
-        </div>
       </div>
+    </div>
+    <div class="home container">
       <div style="width: 100%">
         <div class="small-title">Artikel Terbaru</div>
       </div>
@@ -22,6 +28,7 @@
           v-for="blogEmpat in blogsEmpat"
           :key="`blog-` + blogEmpat.id"
           :blog="blogEmpat"
+          @delete="getEmpat"
         ></blog-item-component>
       </el-col>
 
@@ -34,6 +41,7 @@
           v-for="blogRandom in blogsRandom"
           :key="`blog-` + blogRandom.id"
           :blog="blogRandom"
+          @delete="getRandom"
         ></blog-item-component>
       </el-col>
     </div>
@@ -51,18 +59,27 @@
 </style>
 
 <script>
+import "@/style/page/home.scss";
 import PageContainer from "../components/PageContainer.vue";
 import BlogItemComponentVue from "../components/Blog/BlogItemComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
     blogsEmpat: [],
     blogsRandom: [],
+    isBlogsLoading: false,
+    isRandomsLoading: false,
   }),
   name: "Home",
   components: {
     "page-container": PageContainer,
     "blog-item-component": BlogItemComponentVue,
+  },
+  computed: {
+    ...mapGetters({
+      isLogged: "auth/isLogged",
+    }),
   },
   methods: {
     async getEmpat() {
@@ -71,7 +88,6 @@ export default {
       } catch (err) {
         console.dir(err);
       }
-      //console.dir(blogsEmpat);
     },
     async getRandom() {
       this.blogsRandom = await this.$blog.getRandomBlogs(4);

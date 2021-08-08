@@ -69,7 +69,8 @@
   }
 }
 
-.editor-photo {
+.editor-photo,
+.article-photo {
   margin-bottom: 20px;
   position: relative;
   width: 100%;
@@ -141,4 +142,30 @@
 
 textarea::placeholder {
   color: hsl(0, 0, 70%);
+}
+
+.post {
+  margin-bottom: 30px;
+
+  .data-article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .date {
+      display: flex;
+      align-items: center;
+
+      p {
+        margin-left: 10px;
+        color: #7a7a7a;
+      }
+    }
+  }
+
+  .article-post {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
 }
