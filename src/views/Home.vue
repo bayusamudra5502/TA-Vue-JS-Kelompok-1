@@ -91,7 +91,6 @@ export default {
     },
     async getRandom() {
       this.blogsRandom = await this.$blog.getRandomBlogs(4);
-      //console.dir(blogsEmpat);
     },
   },
   created() {
