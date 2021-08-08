@@ -38,6 +38,14 @@ const routes = [
     component: () => import("../views/About.vue"),
   },
   {
+    path: "/posts",
+    name: "Posts",
+    component: () => import("../views/Posts.vue"),
+    meta: {
+      isAuthDisallowed: true,
+    },
+  },
+  {
     path: "/posts/add",
     name: "AddBlog",
     component: () => import("../views/AddArticle.vue"),
