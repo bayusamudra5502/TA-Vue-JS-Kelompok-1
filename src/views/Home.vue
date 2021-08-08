@@ -24,12 +24,16 @@
       </div>
 
       <el-col :span="24">
-        <blog-item-component
+        <blog-item-skeleton
+          :loading="isBlogsLoading"
           v-for="blogEmpat in blogsEmpat"
           :key="`blog-` + blogEmpat.id"
-          :blog="blogEmpat"
-          @delete="getEmpat"
-        ></blog-item-component>
+        >
+          <blog-item-component
+            :blog="blogEmpat"
+            @delete="getEmpat"
+          ></blog-item-component>
+        </blog-item-skeleton>
       </el-col>
 
       <el-col :span="24">
@@ -37,12 +41,16 @@
       </el-col>
 
       <el-col :span="24">
-        <blog-item-component
-          v-for="blogRandom in blogsRandom"
-          :key="`blog-` + blogRandom.id"
-          :blog="blogRandom"
-          @delete="getRandom"
-        ></blog-item-component>
+        <blog-item-skeleton
+          :loading="isRandomsLoading"
+          v-for="blogEmpat in blogsRandom"
+          :key="`blog-` + blogEmpat.id"
+        >
+          <blog-item-component
+            :blog="blogEmpat"
+            @delete="getEmpat"
+          ></blog-item-component>
+        </blog-item-skeleton>
       </el-col>
     </div>
   </page-container>
@@ -62,6 +70,7 @@
 import "@/style/page/home.scss";
 import PageContainer from "../components/PageContainer.vue";
 import BlogItemComponentVue from "../components/Blog/BlogItemComponent.vue";
+import BlogItemSkeleton from "../components/Blog/BlogItemSkeleton.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -75,6 +84,7 @@ export default {
   components: {
     "page-container": PageContainer,
     "blog-item-component": BlogItemComponentVue,
+    "blog-item-skeleton": BlogItemSkeleton,
   },
   computed: {
     ...mapGetters({
@@ -83,15 +93,24 @@ export default {
   },
   methods: {
     async getEmpat() {
+      this.isRandomsLoading = true;
       try {
         this.blogsEmpat = (await this.$blog.getAllBlogs()).data;
       } catch (err) {
+        this.$message.error("Terjadi kesalahan saat mendapatkan data");
         console.dir(err);
       }
+      this.isRandomsLoading = false;
     },
     async getRandom() {
-      this.blogsRandom = await this.$blog.getRandomBlogs(4);
-      //console.dir(blogsEmpat);
+      this.isRandomsLoading = true;
+      try {
+        this.blogsRandom = await this.$blog.getRandomBlogs(4);
+      } catch (err) {
+        this.$message.error("Terjadi kesalahan saat mendapatkan data");
+        console.dir(err);
+      }
+      this.isRandomsLoading = false;
     },
   },
   created() {

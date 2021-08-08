@@ -14,7 +14,7 @@
       <div class="footer-artikel">
         <div class="date">
           <img src="@/assets/calendar.png" />
-          <p>Disini Tanggal</p>
+          <p>{{ lastModified }}</p>
         </div>
         <div v-if="isLogged">
           <router-link :to="'/posts/' + blog.id + '/edit'">
@@ -60,6 +60,11 @@ export default {
     ...mapGetters({
       isLogged: "auth/isLogged",
     }),
+    lastModified() {
+      return new Intl.DateTimeFormat("id", {
+        dateStyle: "long",
+      }).format(this.blog.date);
+    },
   },
   methods: {
     async deleteBlog() {
