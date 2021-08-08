@@ -14,9 +14,9 @@
       </el-row>
       <el-pagination
          v-model="page" 
-         @input="getAll"
+        @current-change="getAll"
+        :current-page.sync="current_page"
         :page-size="4"
-        :pager-count="perPage"
         layout="prev, pager, next"
         :total="lengthPage">
       </el-pagination>
@@ -56,6 +56,7 @@ export default {
   data: () => ({
     blogsAll : [],
     page : 0,
+    current_page: 1,
     lengthPage : 0,
     perPage : 0
   }),
@@ -65,14 +66,14 @@ export default {
     "blog-item-component" : BlogItemComponentVue
   },
   methods:{
-    async getAll(){
+    async getAll(page){
       try {
-        this.blogsAll = (await this.$blog.getAllBlogs()).data;
-        console.log((await this.$blog.getAllBlogs()))
+        this.blogsAll = (await this.$blog.getAllBlogs(page)).data;
+        //console.log((await this.$blog.getAllBlogs(page)))
         // this.blogsAll = blogs;
-        this.page = (await this.$blog.getAllBlogs()).current_page;
-        this.lengthPage = (await this.$blog.getAllBlogs()).last_page
-        this.perPage = (await this.$blog.getAllBlogs()).data.length;
+        this.page = (await this.$blog.getAllBlogs(page)).current_page;
+        this.lengthPage = (await this.$blog.getAllBlogs(page)).last_page
+        this.perPage = (await this.$blog.getAllBlogs(page)).data.length;
       } catch (err) {
         console.dir(err);
       }
