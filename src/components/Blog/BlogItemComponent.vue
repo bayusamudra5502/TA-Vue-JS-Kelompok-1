@@ -24,7 +24,6 @@
             confirm-button-text="Ya"
             cancel-button-text="Tidak"
             icon="el-icon-info"
-            icon-color="red"
             title="Apakah anda yakin menghapus artikel ini?"
             @confirm="deleteBlog"
           >
