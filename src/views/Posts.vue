@@ -14,6 +14,7 @@
       </el-row>
       <el-pagination
          v-model="page" 
+         @input="getAll"
         :page-size="4"
         :pager-count="perPage"
         layout="prev, pager, next"
