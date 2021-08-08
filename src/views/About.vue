@@ -1,20 +1,24 @@
 <template>
   <page-container>
-    <div class="home">
-      <p>Ini Halaman About yaa</p>
-      <h1>Creator:</h1>
-      <ul v-for="(creator , index) in creators">
-          <li>        
-            Name: {{creator.Name}} <br/>
-            Github ID: {{creator.Github}}
-          </li>
+    <div class="bigimage">
+      <img src="@/assets/about.jpg" />
+      <div class="overlay"></div>
+    </div>
+    <div class="container article post">
+      <h1>About Me</h1>
+      <ul v-for="(creator, index) in creators" :key="index">
+        <li>
+          Name: {{ creator.Name }} <br />
+          Github ID: {{ creator.Github }}
+        </li>
       </ul>
     </div>
   </page-container>
 </template>
 
 <script>
-import PageContainer from "About/components/PageContainer.vue";
+import "@/style/page/article.scss";
+import PageContainer from "../components/PageContainer.vue";
 
 export default {
   name: "Home",
@@ -22,22 +26,22 @@ export default {
     "page-container": PageContainer,
   },
   data() {
-    return{
-      creators : [
+    return {
+      creators: [
         {
-            Name : "Bayu Samudra",
-             Github : "bayusamudra5502"
+          Name: "Bayu Samudra",
+          Github: "bayusamudra5502",
         },
         {
-            Name : "Farham Harvianto",
-            Github : "farhamapple"
+          Name: "Farham Harvianto",
+          Github: "farhamapple",
         },
         {
-            Name : "Patricia Devita Samara",
-            Github : "patriciads17"
-        }
-      ]
-    }
-  }
+          Name: "Patricia Devita Samara",
+          Github: "patriciads17",
+        },
+      ],
+    };
+  },
 };
 </script>
