@@ -4,11 +4,9 @@
       <p>Ini Halaman About yaa</p>
       <h1>Creator:</h1>
       <ul v-for="(creator , index) in creators">
-          <li>
-                    
+          <li>        
             Name: {{creator.Name}} <br/>
             Github ID: {{creator.Github}}
-        
           </li>
       </ul>
     </div>
